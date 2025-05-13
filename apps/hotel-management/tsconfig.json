@@ -1,0 +1,12 @@
+{
+  "extends": "@hm/typescript-config/vite.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+
+    /* Path */
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

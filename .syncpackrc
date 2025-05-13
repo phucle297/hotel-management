@@ -1,0 +1,14 @@
+{
+	"versionGroups": [
+		{
+			"packages": [
+				"@hm/*"
+			],
+			"dependencies": [
+				"@hm/*"
+			],
+			"semverRange": "workspace:*",
+			"isBanned": false
+		}
+	]
+}

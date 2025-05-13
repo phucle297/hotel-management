@@ -1,0 +1,13 @@
+{
+  "extends": "@hm/typescript-config/nestjs.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@libs/*": ["libs/*"],
+      "@config/*": ["config/*"],
+      "@modules/*": ["modules/*"]
+    },
+    "outDir": "./dist"
+  },
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,99 @@
+---
+x-redis-base: &redis-base
+  image: docker.io/bitnami/redis-cluster:7.0.10
+  env_file:
+    - .env
+  environment:
+    - ALLOW_EMPTY_PASSWORD=yes
+    - REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3
+services:
+  db-master:
+    image: mysql:8.0.28
+    container_name: hm-db-master
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - -h
+        - localhost
+      interval: 5s
+      timeout: 10s
+      retries: 20
+    restart: unless-stopped
+    ports:
+      - $MYSQL_PORT:3306
+    volumes:
+      - ./docker/db-config/master/master.cnf:/etc/my.cnf
+      - ./docker/db-config/master/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - .env
+    networks:
+      - hm
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 2G
+        reservations:
+          cpus: '0.25'
+          memory: 1G
+  db-slave:
+    image: mysql:8.0.28
+    container_name: hm-db-slave
+    restart: always
+    depends_on:
+      db-master:
+        condition: service_healthy
+    ports:
+      - $MYSQL_SLAVE_PORT:3306
+    volumes:
+      - ./docker/db-config/slave/slave.cnf:/etc/my.cnf
+      - ./docker/db-config/slave/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - .env
+    networks:
+      - hm
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - -h
+        - localhost
+      interval: 5s
+      timeout: 10s
+      retries: 20
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 2G
+        reservations:
+          cpus: '0.25'
+          memory: 1G
+  redis-node-1:
+    container_name: hm-redis-node-1
+    <<: *redis-base
+  redis-node-2:
+    container_name: hm-redis-node-2
+    <<: *redis-base
+  redis-node-3:
+    container_name: hm-redis-node-3
+    <<: *redis-base
+  redis-node-0:
+    container_name: hm-redis-node-0
+    <<: *redis-base
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3
+      - REDIS_CLUSTER_REPLICAS=0
+      - REDIS_CLUSTER_CREATOR=yes
+    ports:
+      - $REDIS_PORT_NUMBER:6379
+networks:
+  hm:
