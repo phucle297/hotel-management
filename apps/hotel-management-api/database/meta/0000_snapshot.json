@@ -1,0 +1,335 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "7b354ee8-8dd0-4721-a968-f45d2191f263",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "hm_BookingAgreement": {
+      "name": "hm_BookingAgreement",
+      "columns": {
+        "n4AgreementId": {
+          "name": "n4AgreementId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "n4BookingId": {
+          "name": "n4BookingId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "strNote": {
+          "name": "strNote",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dtUpdateAt": {
+          "name": "dtUpdateAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dtCreateAt": {
+          "name": "dtCreateAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "hm_BookingAgreement_n4BookingId_hm_BookingPeriod_n4BookingId_fk": {
+          "name": "hm_BookingAgreement_n4BookingId_hm_BookingPeriod_n4BookingId_fk",
+          "tableFrom": "hm_BookingAgreement",
+          "tableTo": "hm_BookingPeriod",
+          "columnsFrom": [
+            "n4BookingId"
+          ],
+          "columnsTo": [
+            "n4BookingId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "hm_BookingAgreement_n4AgreementId": {
+          "name": "hm_BookingAgreement_n4AgreementId",
+          "columns": [
+            "n4AgreementId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "hm_BookingPeriod": {
+      "name": "hm_BookingPeriod",
+      "columns": {
+        "n4BookingId": {
+          "name": "n4BookingId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "n4CustomerId": {
+          "name": "n4CustomerId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "n4RoomId": {
+          "name": "n4RoomId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "check_in": {
+          "name": "check_in",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "check_out": {
+          "name": "check_out",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deposit": {
+          "name": "deposit",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "price_per_night": {
+          "name": "price_per_night",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "n4DurationDays": {
+          "name": "n4DurationDays",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "strNote": {
+          "name": "strNote",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dtUpdateAt": {
+          "name": "dtUpdateAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dtCreateAt": {
+          "name": "dtCreateAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "hm_BookingPeriod_n4CustomerId_hm_Customer_n4CustomerId_fk": {
+          "name": "hm_BookingPeriod_n4CustomerId_hm_Customer_n4CustomerId_fk",
+          "tableFrom": "hm_BookingPeriod",
+          "tableTo": "hm_Customer",
+          "columnsFrom": [
+            "n4CustomerId"
+          ],
+          "columnsTo": [
+            "n4CustomerId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "hm_BookingPeriod_n4RoomId_hm_Room_n4RoomId_fk": {
+          "name": "hm_BookingPeriod_n4RoomId_hm_Room_n4RoomId_fk",
+          "tableFrom": "hm_BookingPeriod",
+          "tableTo": "hm_Room",
+          "columnsFrom": [
+            "n4RoomId"
+          ],
+          "columnsTo": [
+            "n4RoomId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "hm_BookingPeriod_n4BookingId": {
+          "name": "hm_BookingPeriod_n4BookingId",
+          "columns": [
+            "n4BookingId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "hm_Customer": {
+      "name": "hm_Customer",
+      "columns": {
+        "n4CustomerId": {
+          "name": "n4CustomerId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "strFullname": {
+          "name": "strFullname",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "strIdentityNumber": {
+          "name": "strIdentityNumber",
+          "type": "char(12)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dtUpdateAt": {
+          "name": "dtUpdateAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dtCreateAt": {
+          "name": "dtCreateAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "hm_Customer_n4CustomerId": {
+          "name": "hm_Customer_n4CustomerId",
+          "columns": [
+            "n4CustomerId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "hm_Room": {
+      "name": "hm_Room",
+      "columns": {
+        "n4RoomId": {
+          "name": "n4RoomId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "strRegion": {
+          "name": "strRegion",
+          "type": "enum('reqion-a','reqion-b','region-c')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "strRoomType": {
+          "name": "strRoomType",
+          "type": "enum('eco','normal','vip')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "n4Floor": {
+          "name": "n4Floor",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "n4RoomNumber": {
+          "name": "n4RoomNumber",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "n1Available": {
+          "name": "n1Available",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "dtUpdateAt": {
+          "name": "dtUpdateAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dtCreateAt": {
+          "name": "dtCreateAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "hm_Room_n4RoomId": {
+          "name": "hm_Room_n4RoomId",
+          "columns": [
+            "n4RoomId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}
